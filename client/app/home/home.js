@@ -21,9 +21,16 @@ angular.module( 'game.home', [
 .controller('HomeCtrl', function HomeController($scope, $state, $http) {
 
     $scope.cells = {"2":{"3":{"state":1}},"3":{"3":{"state":1}},"4":{"3":{"state":1}}};
-    $scope.size = Array.apply(null, Array(5)).map(function (_, i) {return i+1;});
+    $scope.size = 5;
+    $scope.world = [];
     $scope.refreshIntervalId = null;
     $scope.run = false;
+
+    // Create new world with the given size
+    $scope.createWorld = function() {
+        $scope.world = Array.apply(null, Array(parseInt($scope.size))).map(function (_, i) {return i+1;});
+    };
+    $scope.createWorld();
 
     // Evolve next step
     $scope.step = function() {

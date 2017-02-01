@@ -2,6 +2,11 @@
     <div class="page-header text-center">
       <h1>Conway's Game of Life</h1>
     </div>
+    <div class="form-group">
+      <label>Size of World:</label>
+      <input type="text" class="form-control" ng-model="size" ng-change="createWorld()">
+    </div>
+    <hr />
     <div>
       <button type="button" class="btn btn-success" ng-click="evolve()" ng-if="!run">Evolve continously</button>
       <button type="button" class="btn btn-danger" ng-click="stop()" ng-if="run">Stop evolve</button>
@@ -10,10 +15,9 @@
     <hr />
     <div>
       <table>
-        <tr ng-repeat="x in size">
-          {{x}}
-          <td ng-repeat="y in size"
-              ng-class="cells[x][y].state ? 'alive' : 'dead'"></td>
+        <tr ng-repeat="x in world">
+          <td ng-repeat="y in world"
+              ng-class="cells[size - x + 1][y].state ? 'alive' : 'dead'"></td>
         </tr>
       </table>
     </div>
