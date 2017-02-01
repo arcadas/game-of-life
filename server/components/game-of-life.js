@@ -30,12 +30,15 @@ module.exports = function (world, size) {
             }
         }
         // Remove dead cells and set final state by evolved state
+        var sizeMax = parseInt(size / 2);
+        var sizeMin = parseInt(size / 2) * -1;
         for (var x in world) {
             if (world.hasOwnProperty(x)) {
                 for (var y in world[x]) {
                     if (world[x].hasOwnProperty(y)) {
                         // We do not allow the life out of our world
-                        if ((!world[x][y].evolvedState) || (x < 0 || y < 0 || x > size || y > size)) {
+                        if ((!world[x][y].evolvedState) ||
+                            (x < sizeMin || y < sizeMin || x > sizeMax || y > sizeMax)) {
                             delete world[x][y];
                         } else {
                             world[x][y] = { state: 1, evolvedState: undefined };

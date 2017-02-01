@@ -21,19 +21,19 @@ angular.module( 'game.home', [
 .controller('HomeCtrl', function HomeController($scope, $state, $http) {
 
     $scope.cells = {};
-    $scope.size = 25;
+    $scope.size = 50;
     $scope.world = [];
     $scope.refreshIntervalId = null;
     $scope.run = false;
-    $scope.resolution = 15;
+    $scope.resolution = 10;
     $scope.lifs = [];
     $scope.selectedLif = 'empty';
 
     // Create new world with the given size
     $scope.createWorld = function() {
         $scope.size = parseInt($scope.size);
-        if ($scope.size < 5) {
-            $scope.size = 5;
+        if ($scope.size < 1) {
+            $scope.size = 1;
         }
         if ($scope.size > 100) {
             $scope.size = 100;
@@ -88,7 +88,7 @@ angular.module( 'game.home', [
 
     // Continously evolve the world
     $scope.evolve = function() {
-        $scope.refreshIntervalId = setInterval($scope.step, 1000);
+        $scope.refreshIntervalId = setInterval($scope.step, 500);
         $scope.run = true;
     }
 
