@@ -50,6 +50,22 @@ app.use(bodyParser.json())
 
 // Public API main page
 app.get('/', function (req, res) {
+
+  var gameOfLife = require('./components/game-of-life');
+  // TODO - test
+  var world = {
+    2: {
+      3: { state: 1, evolvedState: undefined }
+    },
+    3: {
+      3: { state: 1, evolvedState: undefined }
+    },
+    4: {
+      3: { state: 1, evolvedState: undefined }
+    }
+  };
+  console.log(gameOfLife(world));
+
   res.send('Game of Life API')
 });
 
