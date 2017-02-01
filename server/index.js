@@ -20,9 +20,9 @@ var config = require('./config');
 //-----------------------------------------------------------------------------
 
 mongoose.connect(config.mongo.uri);
-mongoose.connection.on('error', function(err) {
-    console.error('MongoDB connection error: ' + err);
-    process.exit(-1);
+mongoose.connection.on('error', function (err) {
+  console.error('MongoDB connection error: ' + err);
+  process.exit(-1);
 });
 
 
@@ -31,14 +31,14 @@ mongoose.connection.on('error', function(err) {
 //-----------------------------------------------------------------------------
 
 // CORS
-app.use(function(req, res, next) {
-    // Website you wish to allow to connect
-    res.header("Access-Control-Allow-Origin", '*'); // config.client.host + ':' + config.client.port
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
-    // Request headers you wish to allow
-    res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept');
-    next();
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.header("Access-Control-Allow-Origin", '*'); // config.client.host + ':' + config.client.port
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
+  // Request headers you wish to allow
+  res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept');
+  next();
 });
 // POST data parser to JSON
 app.use(bodyParser.json())
@@ -51,6 +51,22 @@ app.use(bodyParser.json())
 // Public API main page
 app.get('/', function (req, res) {
   res.send('Game of Life API');
+});
+
+// List lif files
+app.get('/lif', function (req, res) {
+  var glob = require("glob")
+  glob("./lif/*.lif", function (er, files) {
+    res.send(files.map(function(file) {
+      return file.split('/').pop();
+    }));
+  })
+});
+
+// Load lif file and return
+app.post('/lif', function (req, res) {
+  var lifParser = require('./components/lif-parser');
+  res.send(lifParser(req.body.name));
 });
 
 // Evolve
