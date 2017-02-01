@@ -11,3 +11,9 @@ table {
 td {
     border: 1px solid #ccc;
 }
+
+.board {
+    padding-top: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+}

@@ -1,41 +1,51 @@
 <div class="home">
-    <div class="page-header text-center">
-      <h1>Conway's Game of Life</h1>
-    </div>
-    <div class="form-group">
-      <label>Size of World:</label>
-      <input type="text" class="form-control" ng-model="size" ng-change="createWorld()">
-    </div>
-    <div class="form-group">
-      <label>Resolution:</label>
-      <input type="text" class="form-control" ng-model="resolution">
-    </div>
-    <div class="form-group">
-      <label>Loda lif file:</label>
-      <select class="form-control" ng-model="selectedLif" ng-change="loadLif()">
-        <option>empty</option>
-        <option ng-repeat="file in lifs">{{file}}</option>
-      </select>
-  </div>
-    <hr />
-    <div>
-      <button type="button" class="btn btn-success" ng-click="evolve()" ng-show="!run">Evolve continously</button>
-      <button type="button" class="btn btn-danger" ng-click="stop()" ng-show="run">Stop evolve</button>
-      <button type="button" class="btn btn-primary" ng-click="step()" ng-show="!run">Next round</button>
-      <button type="button" class="btn btn-warning" ng-click="saveAs()" ng-show="!run && !activeSaving">Save As</button>
-    </div>
-    <hr />
-    <div ng-show="activeSaving">
-      <div class="form-group">
-        <label>Name of pattern:</label>
-        <input type="text" class="form-control" ng-model="pattern">
+  <div class="col-md-6">
+      <div class="page-header text-center">
+        <h1>Conway's Game of Life</h1>
       </div>
-      <button type="button" class="btn btn-default" ng-click="save()" ng-if="!run">Save</button>
-      <br /><br />
-      <div ng-show="saveMsg" class="alert alert-warning" role="alert">{{ saveMsg }}</div>
+      <div class="form-group">
+        <label>Size:</label>
+        <input type="text" class="form-control" ng-model="size" ng-change="createWorld()">
+      </div>
+      <div class="form-group">
+        <label>Resolution:</label>
+        <input type="text" class="form-control" ng-model="resolution">
+      </div>
+      <div class="form-group">
+        <label>Load .lif file:</label>
+        <select class="form-control" ng-model="selectedLif" ng-change="loadLif()">
+          <option>empty</option>
+          <option ng-repeat="file in lifs">{{file}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Load file from database:</label>
+        <select class="form-control" ng-model="selectedItem" ng-change="loadItem()">
+          <option>empty</option>
+          <option ng-repeat="item in list">{{item.name}}</option>
+        </select>
+      </div>
+      <hr />
+      <div>
+        <button type="button" class="btn btn-success" ng-click="evolve()" ng-show="!run">Evolve continously</button>
+        <button type="button" class="btn btn-danger" ng-click="stop()" ng-show="run">Stop evolve</button>
+        <button type="button" class="btn btn-primary" ng-click="step()" ng-show="!run">Next round</button>
+        <button type="button" class="btn btn-warning" ng-click="saveAs()"
+          ng-show="(selectedLif === 'empty') && !run && !activeSaving">Save As</button>
+      </div>
+      <hr />
+      <div ng-show="activeSaving">
+        <div class="form-group">
+          <label>Name of pattern:</label>
+          <input type="text" class="form-control" ng-model="pattern">
+        </div>
+        <button type="button" class="btn btn-default" ng-click="save()" ng-if="!run">Save</button>
+        <br /><br />
+        <div ng-show="saveMsg" class="alert alert-warning" role="alert">{{ saveMsg }}</div>
+      </div>
+      <hr ng-show="activeSaving" />
     </div>
-    <hr ng-show="activeSaving" />
-    <div>
+    <div class="col-md-6 board">
       <table>
         <tr ng-repeat="x in world">
           <td ng-repeat="y in world"

@@ -45,7 +45,7 @@ app.use(bodyParser.json())
 
 
 //-----------------------------------------------------------------------------
-//  API PUBLIC
+//  API
 //-----------------------------------------------------------------------------
 
 // Public API main page
@@ -73,6 +73,18 @@ app.post('/lif', function (req, res) {
 app.post('/pattern', function (req, res) {
   var pattern = require('./api/pattern');
   pattern.save(req, res);
+});
+
+// Get names of patterns
+app.get('/pattern', function (req, res) {
+  var pattern = require('./api/pattern');
+  pattern.list(req, res);
+});
+
+// Get one pattern's cells by name
+app.get('/pattern/:name', function (req, res) {
+  var pattern = require('./api/pattern');
+  pattern.get(req, res);
 });
 
 // Evolve

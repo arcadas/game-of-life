@@ -20,6 +20,7 @@ angular.module( 'game.home', [
 })
 .controller('HomeCtrl', function HomeController($scope, $state, $http, $timeout) {
 
+    $scope.host = 'http://localhost:3000';
     $scope.cells = {};
     $scope.size = 50;
     $scope.world = [];
@@ -28,6 +29,7 @@ angular.module( 'game.home', [
     $scope.resolution = 10;
     $scope.lifs = [];
     $scope.selectedLif = 'empty';
+    $scope.selectedItem = 'empty';
     $scope.activeSaving = false;
     $scope.pattern = '';
 
@@ -48,22 +50,22 @@ angular.module( 'game.home', [
     // Get list of lifs files
     $scope.getLifs = function() {
         $http({
-            url: 'http://localhost:3000/lif',
+            url: $scope.host + '/lif',
             method: 'GET',
         }).then(function(response) {
             $scope.lifs = response.data;
-            console.log($scope.lifs);
         });
     };
     $scope.getLifs();
 
     // Load lif file to board
     $scope.loadLif = function() {
+        $scope.selectedItem = 'empty';
         if ($scope.selectedLif === 'empty') {
             $scope.cells = {};
         } else {
             $http({
-                url: 'http://localhost:3000/lif',
+                url: $scope.host + '/lif',
                 method: 'POST',
                 data: {
                     name: $scope.selectedLif
@@ -74,10 +76,36 @@ angular.module( 'game.home', [
         }
     };
 
+    // Get list of items from DB
+    $scope.loadItems = function() {
+        $http({
+            url: $scope.host + '/pattern',
+            method: 'GET',
+        }).then(function(response) {
+            $scope.list = response.data;
+        });
+    };
+    $scope.loadItems();
+
+    // Load database item to board
+    $scope.loadItem = function() {
+        $scope.selectedLif = 'empty';
+        if ($scope.selectedItem === 'empty') {
+            $scope.cells = {};
+        } else {
+            $http({
+                url: $scope.host + '/pattern/' + $scope.selectedItem,
+                method: 'GET',
+            }).then(function(response) {
+                $scope.cells = response.data;
+            });
+        }
+    };
+
     // Evolve next step
     $scope.step = function() {
         $http({
-            url: 'http://localhost:3000/evolve',
+            url: $scope.host + '/evolve',
             method: 'POST',
             data: {
                 size: parseInt($scope.size),
@@ -136,7 +164,7 @@ angular.module( 'game.home', [
         };
 
         $http({
-            url: 'http://localhost:3000/pattern',
+            url: $scope.host + '/pattern',
             method: 'POST',
             data: {
                 name: $scope.pattern,
