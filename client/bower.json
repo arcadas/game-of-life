@@ -1,0 +1,10 @@
+{
+  "name": "game-of-life",
+  "description": "Conway's Game of Life",
+  "dependencies": {
+    "angularjs": "~1.5.8",
+    "bootstrap": "~3.3.7",
+    "font-awesome": "~4.7.0",
+    "ui-router": "~0.3.2"
+  }
+}
