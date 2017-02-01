@@ -33,11 +33,11 @@ mongoose.connection.on('error', function(err) {
 // CORS
 app.use(function(req, res, next) {
     // Website you wish to allow to connect
-    res.header("Access-Control-Allow-Origin", config.client.host + ':' + config.client.port);
+    res.header("Access-Control-Allow-Origin", '*'); // config.client.host + ':' + config.client.port
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
     // Request headers you wish to allow
-    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept');
     next();
 });
 // POST data parser to JSON
@@ -50,10 +50,13 @@ app.use(bodyParser.json())
 
 // Public API main page
 app.get('/', function (req, res) {
+  res.send('Game of Life API');
+});
 
+// Evolve
+app.post('/evolve', function (req, res) {
   var gameOfLife = require('./components/game-of-life');
-  // http://localhost:3000/?world={%222%22:{%223%22:{%22state%22:1}},%223%22:{%223%22:{%22state%22:1}},%224%22:{%223%22:{%22state%22:1}}}
-  res.send(gameOfLife(JSON.parse(req.query.world)));
+  res.send(gameOfLife(req.body.cells));
 });
 
 

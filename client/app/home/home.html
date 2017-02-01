@@ -3,10 +3,16 @@
       <h1>Conway's Game of Life</h1>
     </div>
     <div>
+      <button type="button" class="btn btn-success" ng-click="evolve()" ng-if="!run">Evolve continously</button>
+      <button type="button" class="btn btn-danger" ng-click="stop()" ng-if="run">Stop evolve</button>
+      <button type="button" class="btn btn-primary" ng-click="step()" ng-if="!run">Next round</button>
+    </div>
+    <hr />
+    <div>
       <table>
-        <tr ng-repeat="x in world">
+        <tr ng-repeat="x in size">
           {{x}}
-          <td ng-repeat="y in world"
+          <td ng-repeat="y in size"
               ng-class="cells[x][y].state ? 'alive' : 'dead'"></td>
         </tr>
       </table>
