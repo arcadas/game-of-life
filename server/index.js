@@ -52,21 +52,8 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
 
   var gameOfLife = require('./components/game-of-life');
-  // TODO - test
-  var world = {
-    2: {
-      3: { state: 1, evolvedState: undefined }
-    },
-    3: {
-      3: { state: 1, evolvedState: undefined }
-    },
-    4: {
-      3: { state: 1, evolvedState: undefined }
-    }
-  };
-  console.log(gameOfLife(world));
-
-  res.send('Game of Life API')
+  // http://localhost:3000/?world={%222%22:{%223%22:{%22state%22:1}},%223%22:{%223%22:{%22state%22:1}},%224%22:{%223%22:{%22state%22:1}}}
+  res.send(gameOfLife(JSON.parse(req.query.world)));
 });
 
 
