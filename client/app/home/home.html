@@ -19,11 +19,22 @@
   </div>
     <hr />
     <div>
-      <button type="button" class="btn btn-success" ng-click="evolve()" ng-if="!run">Evolve continously</button>
-      <button type="button" class="btn btn-danger" ng-click="stop()" ng-if="run">Stop evolve</button>
-      <button type="button" class="btn btn-primary" ng-click="step()" ng-if="!run">Next round</button>
+      <button type="button" class="btn btn-success" ng-click="evolve()" ng-show="!run">Evolve continously</button>
+      <button type="button" class="btn btn-danger" ng-click="stop()" ng-show="run">Stop evolve</button>
+      <button type="button" class="btn btn-primary" ng-click="step()" ng-show="!run">Next round</button>
+      <button type="button" class="btn btn-warning" ng-click="saveAs()" ng-show="!run && !activeSaving">Save As</button>
     </div>
     <hr />
+    <div ng-show="activeSaving">
+      <div class="form-group">
+        <label>Name of pattern:</label>
+        <input type="text" class="form-control" ng-model="pattern">
+      </div>
+      <button type="button" class="btn btn-default" ng-click="save()" ng-if="!run">Save</button>
+      <br /><br />
+      <div ng-show="saveMsg" class="alert alert-warning" role="alert">{{ saveMsg }}</div>
+    </div>
+    <hr ng-show="activeSaving" />
     <div>
       <table>
         <tr ng-repeat="x in world">

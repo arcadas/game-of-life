@@ -69,6 +69,12 @@ app.post('/lif', function (req, res) {
   res.send(lifParser(req.body.name));
 });
 
+// Save pattern into database
+app.post('/pattern', function (req, res) {
+  var pattern = require('./api/pattern');
+  pattern.save(req, res);
+});
+
 // Evolve
 app.post('/evolve', function (req, res) {
   var gameOfLife = require('./components/game-of-life');

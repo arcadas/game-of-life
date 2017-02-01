@@ -18,7 +18,7 @@ angular.module( 'game.home', [
         }
     });
 })
-.controller('HomeCtrl', function HomeController($scope, $state, $http) {
+.controller('HomeCtrl', function HomeController($scope, $state, $http, $timeout) {
 
     $scope.cells = {};
     $scope.size = 50;
@@ -28,6 +28,8 @@ angular.module( 'game.home', [
     $scope.resolution = 10;
     $scope.lifs = [];
     $scope.selectedLif = 'empty';
+    $scope.activeSaving = false;
+    $scope.pattern = '';
 
     // Create new world with the given size
     $scope.createWorld = function() {
@@ -109,6 +111,42 @@ angular.module( 'game.home', [
         } else {
             $scope.cells[x][y] = { "state": 0 };
         }
+    };
+
+    // Activate saving
+    $scope.saveAs = function() {
+        $scope.activeSaving = true;
+    };
+
+    // Save pattern to database
+    $scope.save = function() {
+
+        var responseHandler = function (err) {
+            if (err) {
+                $scope.saveMsg = 'Error happend :(';
+            } else {
+                $scope.saveMsg = 'Succesful saving :)';
+                // $scope.getLifs();
+            }
+            $timeout(function() {
+                $scope.activeSaving = false;
+                $scope.saveMsg = '';
+                $scope.pattern = '';
+            }, 3000);
+        };
+
+        $http({
+            url: 'http://localhost:3000/pattern',
+            method: 'POST',
+            data: {
+                name: $scope.pattern,
+                cells: $scope.cells
+            }
+        }).then(function(response) {
+            responseHandler(response.status !== 200);
+        }, function () {
+            responseHandler(true);
+        });
     };
 
 });
