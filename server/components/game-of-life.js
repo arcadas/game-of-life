@@ -1,7 +1,7 @@
 /**
  * Game of Life logic
  */
-module.exports = function(world) {
+module.exports = function(world, size) {
 
   var evolve = function() {
     // Fill up empty neighbours cells
@@ -34,7 +34,8 @@ module.exports = function(world) {
       if (world.hasOwnProperty(x)) {
         for (var y in world[x]) {
           if (world[x].hasOwnProperty(y)) {
-            if (!world[x][y].evolvedState) {
+            // We do not allow the life out of our world
+            if ((!world[x][y].evolvedState) || (x < 0 || y < 0 || x > size || y > size)) {
               delete world[x][y];
             } else {
               world[x][y] = { state: 1, evolvedState: undefined };

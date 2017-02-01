@@ -17,7 +17,8 @@
       <table>
         <tr ng-repeat="x in world">
           <td ng-repeat="y in world"
-              ng-class="cells[size - x + 1][y].state ? 'alive' : 'dead'"></td>
+              ng-class="cells[size - x + 1][y].state ? 'alive' : 'dead'"
+              ng-click="toggleLife(x, y)"></td>
         </tr>
       </table>
     </div>

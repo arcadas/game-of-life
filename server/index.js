@@ -56,7 +56,7 @@ app.get('/', function (req, res) {
 // Evolve
 app.post('/evolve', function (req, res) {
   var gameOfLife = require('./components/game-of-life');
-  res.send(gameOfLife(req.body.cells));
+  res.send(gameOfLife(req.body.cells, req.body.size));
 });
 
 

@@ -38,6 +38,7 @@ angular.module( 'game.home', [
             url: 'http://localhost:3000/evolve',
             method: 'POST',
             data: {
+                size: $scope.size,
                 cells: $scope.cells
             }
         }).then(function(response) {
@@ -55,6 +56,19 @@ angular.module( 'game.home', [
     $scope.stop = function() {
         clearInterval($scope.refreshIntervalId);
         $scope.run = false;
+    };
+
+    // Toggle life of given cell
+    $scope.toggleLife = function(x, y) {
+        if (typeof $scope.cells[x] === 'undefined') {
+            $scope.cells[x] = {};
+        }
+        if ((typeof $scope.cells[x][y] === 'undefined') ||
+            ($scope.cells[x][y].state === 0)){
+            $scope.cells[x][y] = { "state": 1 };
+        } else {
+            $scope.cells[x][y] = { "state": 0 };
+        }
     };
 
 });
