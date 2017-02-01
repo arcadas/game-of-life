@@ -20,6 +20,7 @@ angular.module( 'game.home', [
 })
 .controller('HomeCtrl', function HomeController($scope, $state) {
 
-    $scope.title = 'Game of Life';
+    $scope.cells = {"2":{"3":{"state":1}},"3":{"3":{"state":1}},"4":{"3":{"state":1}}};
+    $scope.world = Array.apply(null, Array(5)).map(function (_, i) {return i+1;});
 
 });

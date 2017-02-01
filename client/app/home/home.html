@@ -1,3 +1,15 @@
 <div class="home">
-    <h1>{{ title }}</h1>
+    <div class="page-header text-center">
+      <h1>Conway's Game of Life</h1>
+    </div>
+    <div>
+      <table>
+        <tr ng-repeat="x in world">
+          {{x}}
+          <td ng-repeat="y in world"
+              ng-class="cells[x][y].state ? 'alive' : 'dead'"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
